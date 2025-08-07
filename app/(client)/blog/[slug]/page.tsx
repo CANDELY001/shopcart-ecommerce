@@ -15,13 +15,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import React from "react";
 
-const SingleBlogPage = async ({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) => {
-  const { slug } = await params;
-  const blog: SINGLE_BLOG_QUERYResult = await getSingleBlog(slug);
+const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
+  const { slug } = params;
+  const blogArr = await getSingleBlog(slug);
+  const blog = Array.isArray(blogArr) ? blogArr[0] : blogArr;
   if (!blog) return notFound();
 
   return (
@@ -41,7 +38,7 @@ const SingleBlogPage = async ({
             <div className="text-xs flex items-center gap-5 my-7">
               <div className="flex items-center relative group cursor-pointer">
                 {blog?.blogcategories?.map(
-                  (item: { title: string }, index: number) => (
+                  (item: { title: string | null }, index: number) => (
                     <p
                       key={index}
                       className="font-semibold text-shop_dark_green tracking-wider"
@@ -200,21 +197,23 @@ const BlogLeft = async ({ slug }: { slug: string }) => {
       <div className="border border-lightColor p-5 rounded-md">
         <Title className="text-base">Blog Categories</Title>
         <div className="space-y-2 mt-2">
-          {categories?.map(({ blogcategories }, index) => (
-            <div
-              key={index}
-              className="text-lightColor flex items-center justify-between text-sm font-medium"
-            >
-              <p>{blogcategories[0]?.title}</p>
-              <p className="text-darkColor font-semibold">{`(1)`}</p>
-            </div>
-          ))}
+          {categories?.map(({ blogcategories }, index) =>
+            blogcategories && blogcategories[0] ? (
+              <div
+                key={index}
+                className="text-lightColor flex items-center justify-between text-sm font-medium"
+              >
+                <p>{blogcategories[0]?.title}</p>
+                <p className="text-darkColor font-semibold">{`(1)`}</p>
+              </div>
+            ) : null
+          )}
         </div>
       </div>
       <div className="border border-lightColor p-5 rounded-md mt-10">
         <Title className="text-base">Latest Blogs</Title>
         <div className="space-y-4 mt-4">
-          {blogs?.map((blog: Blog, index: number) => (
+          {blogs?.map((blog: any, index: number) => (
             <Link
               href={`/blog/${blog?.slug?.current}`}
               key={index}
