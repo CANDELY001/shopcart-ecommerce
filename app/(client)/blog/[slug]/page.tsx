@@ -16,12 +16,15 @@ import { notFound } from "next/navigation";
 
 import React from "react";
 
-const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
+const SingleBlogPage = async ({
+  params,
+}: {
+  params: { [key: string]: string };
+}) => {
   const { slug } = params;
   const blogArr = await getSingleBlog(slug);
   const blog = Array.isArray(blogArr) ? blogArr[0] : blogArr;
   if (!blog) return notFound();
-
   return (
     <div className="py-10">
       <Container className="grid grid-cols-1 lg:grid-cols-4 gap-5">
