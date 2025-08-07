@@ -30,7 +30,7 @@ const ImageView = ({ images = [], isStock }: Props) => {
   console.log(active);
 
   return (
-    <div className="w-full md:w-1/2 space-y-2 md:space-y-4">
+    <div className="w-full md:w-full space-y-2 md:space-y-4">
       <AnimatePresence mode="wait">
         <motion.div
           key={active?._key}

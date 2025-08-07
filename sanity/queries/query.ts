@@ -81,6 +81,34 @@ const OTHERS_BLOG_QUERY = defineQuery(`*[
     "slug": slug.current,
   }
 }`);
+
+const PRODUCT_REVIEWS_QUERY = defineQuery(`*[
+  _type == "review" 
+  && product._ref == $productId 
+  && isApproved == true
+] | order(createdAt desc) {
+  _id,
+  customerName,
+  rating,
+  title,
+  comment,
+  createdAt,
+  isVerifiedPurchase,
+  helpfulCount
+}`);
+
+const PRODUCT_REVIEW_STATS_QUERY = defineQuery(`{
+  "totalReviews": count(*[_type == "review" && product._ref == $productId && isApproved == true]),
+  "averageRating": math::avg(*[_type == "review" && product._ref == $productId && isApproved == true].rating),
+  "ratingDistribution": {
+    "5": count(*[_type == "review" && product._ref == $productId && isApproved == true && rating == 5]),
+    "4": count(*[_type == "review" && product._ref == $productId && isApproved == true && rating == 4]),
+    "3": count(*[_type == "review" && product._ref == $productId && isApproved == true && rating == 3]),
+    "2": count(*[_type == "review" && product._ref == $productId && isApproved == true && rating == 2]),
+    "1": count(*[_type == "review" && product._ref == $productId && isApproved == true && rating == 1])
+  }
+}`);
+
 export {
   BRANDS_QUERY,
   LATEST_BLOG_QUERY,
@@ -92,4 +120,6 @@ export {
   SINGLE_BLOG_QUERY,
   BLOG_CATEGORIES,
   OTHERS_BLOG_QUERY,
+  PRODUCT_REVIEWS_QUERY,
+  PRODUCT_REVIEW_STATS_QUERY,
 };

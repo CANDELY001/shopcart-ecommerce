@@ -9,6 +9,8 @@ import {
   MY_ORDERS_QUERY,
   OTHERS_BLOG_QUERY,
   PRODUCT_BY_SLUG_QUERY,
+  PRODUCT_REVIEWS_QUERY,
+  PRODUCT_REVIEW_STATS_QUERY,
   SINGLE_BLOG_QUERY,
 } from "./query";
 
@@ -151,6 +153,43 @@ const getOthersBlog = async (slug: string, quantity: number) => {
     return [];
   }
 };
+
+const getProductReviews = async (productId: string) => {
+  try {
+    const { data } = await sanityFetch({
+      query: PRODUCT_REVIEWS_QUERY,
+      params: { productId },
+    });
+    return data ?? [];
+  } catch (error) {
+    console.log("Error fetching product reviews:", error);
+    return [];
+  }
+};
+
+const getProductReviewStats = async (productId: string) => {
+  try {
+    const { data } = await sanityFetch({
+      query: PRODUCT_REVIEW_STATS_QUERY,
+      params: { productId },
+    });
+    return (
+      data ?? {
+        totalReviews: 0,
+        averageRating: 0,
+        ratingDistribution: { "5": 0, "4": 0, "3": 0, "2": 0, "1": 0 },
+      }
+    );
+  } catch (error) {
+    console.log("Error fetching product review stats:", error);
+    return {
+      totalReviews: 0,
+      averageRating: 0,
+      ratingDistribution: { "5": 0, "4": 0, "3": 0, "2": 0, "1": 0 },
+    };
+  }
+};
+
 export {
   getCategories,
   getAllBrands,
@@ -163,4 +202,6 @@ export {
   getSingleBlog,
   getBlogCategories,
   getOthersBlog,
+  getProductReviews,
+  getProductReviewStats,
 };
