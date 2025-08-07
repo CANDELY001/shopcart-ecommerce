@@ -16,9 +16,12 @@ import { notFound } from "next/navigation";
 
 import React from "react";
 
-const SingleBlogPage = async (props: { params: { slug: string } }) => {
-  const { params } = props;
-  const { slug } = params;
+const SingleBlogPage = async ({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) => {
+  const { slug } = await params;
   const blogArr = await getSingleBlog(slug);
   const blog = Array.isArray(blogArr) ? blogArr[0] : blogArr;
   if (!blog) return notFound();
