@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import Title from "@/components/Title";
-import { SINGLE_BLOG_QUERYResult } from "@/sanity.types";
+
 import { urlFor } from "@/sanity/lib/image";
 import {
   getBlogCategories,
@@ -16,8 +16,8 @@ import { notFound } from "next/navigation";
 
 import React from "react";
 
-const SingleBlogPage = async (props: any) => {
-  const { params } = props as { params: { slug: string } };
+const SingleBlogPage = async (props: { params: { slug: string } }) => {
+  const { params } = props;
   const { slug } = params;
   const blogArr = await getSingleBlog(slug);
   const blog = Array.isArray(blogArr) ? blogArr[0] : blogArr;
