@@ -16,7 +16,8 @@ import { notFound } from "next/navigation";
 
 import React from "react";
 
-const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
+const SingleBlogPage = async (props: any) => {
+  const { params } = props as { params: { slug: string } };
   const { slug } = params;
   const blogArr = await getSingleBlog(slug);
   const blog = Array.isArray(blogArr) ? blogArr[0] : blogArr;
