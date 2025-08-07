@@ -218,9 +218,7 @@ const BlogLeft = async ({ slug }: { slug: string }) => {
             (
               blog: {
                 slug?: { current?: string } | null;
-                mainImage?: {
-                  asset?: { _ref?: string; _type?: string };
-                } | null;
+                mainImage?: Record<string, unknown> | null;
                 title?: string | null;
               },
               index: number
