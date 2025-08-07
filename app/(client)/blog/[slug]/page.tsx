@@ -13,9 +13,11 @@ import { PortableText } from "next-sanity";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+
+type PageProps<T = {}> = { params: T };
 import React from "react";
 
-const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
+const SingleBlogPage = async ({ params }: PageProps<{ slug: string }>) => {
   const { slug } = params;
   const blogArr = await getSingleBlog(slug);
   const blog = Array.isArray(blogArr) ? blogArr[0] : blogArr;
