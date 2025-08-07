@@ -3,8 +3,24 @@ import React, { useState, useEffect } from "react";
 import ReviewForm from "./ReviewForm";
 import ReviewList from "./ReviewList";
 
+// Define a Product type (customize as needed)
+export interface Product {
+  _id: string;
+  description?: string;
+  // Add other fields as needed
+}
+
+// Define a ReviewFormData type
+export interface ReviewFormData {
+  customerName: string;
+  customerEmail: string;
+  rating: number;
+  title: string;
+  comment: string;
+}
+
 interface ProductInfoTabsProps {
-  product: any;
+  product: Product;
 }
 
 const ProductInfoTabs = ({ product }: ProductInfoTabsProps) => {
@@ -64,7 +80,7 @@ const ProductInfoTabs = ({ product }: ProductInfoTabsProps) => {
     }
   };
 
-  const handleReviewSubmit = async (reviewData: any) => {
+  const handleReviewSubmit = async (reviewData: ReviewFormData) => {
     setIsSubmitting(true);
     setSubmitMessage("");
 

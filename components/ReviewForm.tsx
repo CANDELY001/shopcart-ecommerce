@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import StarRating from "./StarRating";
 import { Button } from "./ui/button";
 
+import type { ReviewFormData } from "./ProductInfoTabs";
+
 interface ReviewFormProps {
   productId: string;
-  onSubmit: (reviewData: any) => void;
+  onSubmit: (reviewData: ReviewFormData) => void;
   isSubmitting?: boolean;
 }
 
@@ -59,10 +61,7 @@ const ReviewForm = ({
     e.preventDefault();
 
     if (validateForm()) {
-      onSubmit({
-        ...formData,
-        productId,
-      });
+      onSubmit({ ...formData });
     }
   };
 
