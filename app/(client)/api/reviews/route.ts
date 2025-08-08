@@ -7,14 +7,14 @@ export async function POST(request: NextRequest) {
     const { productId, customerName, customerEmail, rating, title, comment } =
       body;
 
-    console.log("Received review submission:", {
-      productId,
-      customerName,
-      customerEmail,
-      rating,
-      title,
-      comment,
-    });
+    //console.log("Received review submission:", {
+    //  productId,
+    //  customerName,
+    //  customerEmail,
+    //  rating,
+    //  title,
+    //  comment,
+    //});
 
     // Validate required fields
     if (
@@ -59,11 +59,11 @@ export async function POST(request: NextRequest) {
       helpfulCount: 0,
     };
 
-    console.log("Creating review document:", reviewDoc);
+    //console.log("Creating review document:", reviewDoc);
 
     const result = await backendClient.create(reviewDoc);
 
-    console.log("Review created successfully:", result._id);
+    //console.log("Review created successfully:", result._id);
 
     return NextResponse.json(
       {
